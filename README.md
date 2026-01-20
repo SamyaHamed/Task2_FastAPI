@@ -39,7 +39,7 @@ pip install -r requirements.txt
 ```bash
 uvicorn main:app --reload
 ```
-#School Endpoints
+# School Endpoints
 | Method | Endpoint | Description |
 |------|--------|------------|
 | POST | `/school/` | Add new school |
@@ -78,13 +78,13 @@ Example – Create Student
 }
 ```
 
-#Data Validation
+# Data Validation
 
 A student cannot be added unless the school exists.
 
 Proper HTTP status codes are returned (404, 200, 201).
 
-#Learning Goals
+# Learning Goals
 
 This project helps understand:
 
