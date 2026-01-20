@@ -20,31 +20,6 @@ This project is built for learning purposes and demonstrates:
 - **Uvicorn**
 
 
-
-## 📁 Project Structure
-FastApi_Student/
-│
-├── database/
-│ └── data.py
-│
-├── models/
-│ ├── School.py
-│ └── Student.py
-│
-├── schema/
-│ ├── SchoolSchema.py
-│ └── StudentSchema.py
-│
-├── routers/
-│ ├── school.py
-│ └── student.py
-│
-├── main.py
-├── requirements.txt
-└── README.md
-
-
-
 ##  Installation & Setup
 
 ### 1- Create virtual environment
@@ -65,12 +40,14 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 #School Endpoints
-##Method	Endpoint				Description
-POST		/school/				Add new school
-GET			/school/				Get all schools
-GET			/school/{id}			Get school by ID
-GET			/school/{id}/students	Get school with students
-DELETE		/school/{id}			Delete school
+| Method | Endpoint | Description |
+|------|--------|------------|
+| POST | `/school/` | Add new school |
+| GET | `/school/` | Get all schools |
+| GET | `/school/{id}` | Get school by ID |
+| GET | `/school/{id}/students` | Get school with students |
+| DELETE | `/school/{id}` | Delete school |
+
 
 Example – Create School
 ```json
@@ -84,12 +61,12 @@ Example – Create School
 
 
 # Student Endpoints
-##Method		Endpoint		Description
-POST		/student/		Add student
-GET			/student/		Get all students
-GET			/student/{id}	Get student by ID
-PUT			/student/{id}	Update student
-DELETE		/student/{id}	Delete student
+| Method | Endpoint | Description |
+|------|--------|------------|
+| POST | `/student/` | Add student|
+| GET | `/student/{id}` | Get student by ID |
+| GET | `/student/{id}` | Update student |
+| DELETE | `/student/{id}` | Delete student |
 
 Example – Create Student
 ```json
@@ -101,25 +78,25 @@ Example – Create Student
 }
 ```
 
-##Data Validation
+#Data Validation
 
 A student cannot be added unless the school exists.
 
 Proper HTTP status codes are returned (404, 200, 201).
 
-##Learning Goals
+#Learning Goals
 
 This project helps understand:
 
-Async programming in FastAPI
+ - Async programming in FastAPI
 
-SQLAlchemy relationships
+ - SQLAlchemy relationships
 
-CRUD operations
+ - CRUD operations
 
-Clean API design
+ - Clean API design
 
-Pydantic schemas & validation
+ - Pydantic schemas & validation
 
 
 
