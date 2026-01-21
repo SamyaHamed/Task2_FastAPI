@@ -39,14 +39,19 @@ pip install -r requirements.txt
 ```bash
 uvicorn main:app --reload
 ```
-# School Endpoints
-| Method | Endpoint | Description |
-|------|--------|------------|
-| POST | `/school/` | Add new school |
-| GET | `/school/` | Get all schools |
-| GET | `/school/{id}` | Get school by ID |
-| GET | `/school/{id}/students` | Get school with students |
-| DELETE | `/school/{id}` | Delete school |
+#  Endpoints
+| Method | Endpoint                                     | Description |
+|--------|----------------------------------------------|------------|
+| POST   | `/schools/`                                  | Add new school |
+| GET    | `/schools/`                                  | Get all schools |
+| GET    | `/schools/{school_id}`                       | Get school by ID |
+| GET    | `/schools/{school_id}/students`              | Get school with students |
+| DELETE | `/schools/{school_id}`                       | Delete school |
+| POST   | `/schoools/{school_id}/students/`            | Add student|
+| GET    | `/schools/{school_id}/students/{student_id}` | Get student by ID |
+| PUT    | `/schools/{school_id}/students/{student_id}` | Update student |
+| DELETE | `/schools/{school_id}/student/{student_id}`  | Delete student |
+
 
 
 Example – Create School
@@ -59,22 +64,12 @@ Example – Create School
 }
 ```
 
-
-# Student Endpoints
-| Method | Endpoint | Description |
-|------|--------|------------|
-| POST | `/student/` | Add student|
-| GET | `/student/{id}` | Get student by ID |
-| GET | `/student/{id}` | Update student |
-| DELETE | `/student/{id}` | Delete student |
-
 Example – Create Student
 ```json
 {
   "first_name": "Sara",
   "last_name": "Ahmad",
-  "birth_date": "2003-05-10T00:00:00",
-  "school_id": 1
+  "birth_date": "2003-05-10T00:00:00"
 }
 ```
 
