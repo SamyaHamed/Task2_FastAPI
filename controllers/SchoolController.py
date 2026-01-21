@@ -6,10 +6,12 @@ from sqlalchemy.orm import selectinload
 
 from database.data import AsyncSessionLocal
 from models.School import School
+from models.Student import Student
 from schema.SchoolSchema import SchoolCreate, SchoolResponse,SchoolWithStudents
+from schema.StudentSchema import StudentCreate, StudentUpdate , StudentResponse
 
 router = APIRouter(
-    prefix="/school",
+    prefix="api/schools",
     tags=["Schools"]
 )
 
@@ -69,6 +71,76 @@ async def delete_school(school_id: int,db: AsyncSession = Depends(get_db)):
     return { "messages" : "School deleted successfully" }
 
 
+@router.post("/{school_id}/students")
+async def add_student(
+    student: StudentCreate,
+    school_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(
+        select(School).where(School.id == school_id)
+    )
+    school = result.scalar_one_or_none()
+
+    if not school:
+        raise HTTPException(
+            status_code=404,
+            detail="School not found"
+        )
+
+    new_student = Student(
+        first_name = student.first_name,
+        last_name = student.last_name,
+        birth_date = student.birth_date,
+        school_id= school_id
+    )
+    db.add(new_student)
+    await db.commit()
+    await db.refresh(new_student)
+    return { "message": "Student added successfully" ,
+             "student": new_student }
+
+
+@router.get("/{school_id}/students/{student_id}", response_model=StudentResponse)
+async def get_student(student_id : int ,
+                      school_id : int ,
+                      db: AsyncSession = Depends(get_db)):
+    students = await db.execute(select(Student).where(Student.id == student_id and  Student.school_id == school_id))
+    return  students.scalars().all()
+
+
+
+@router.put("/{school_id}/students/{student_id}", response_model=StudentResponse)
+async def update_student(
+        student_id : int ,
+        school_id : int ,
+        payload: StudentUpdate,
+        db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Student).where(Student.id == student_id and Student.school_id == school_id))
+    student = result.scalars().first()
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    data = payload.model_dump(exclude_unset=True)
+    for key, value in data.items():
+        setattr(student, key, value)
+
+    await db.commit()
+    await db.refresh(student)
+    return student
+
+
+@router.delete("/{school_id}/students/{student_id}")
+async def delete_student(
+        student_id: int ,
+        school_id : int ,
+        db: AsyncSession = Depends(get_db)):
+    students = await db.execute(select(Student).where(Student.id == student_id and Student.school_id == school_id))
+    student = students.scalars().first()
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    await db.delete(student)
+    await db.commit()
+    return { "message": "Student deleted successfully" }
 
 
 
